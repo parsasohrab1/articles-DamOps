@@ -9,10 +9,12 @@ class InflowForecaster:
     """log inflow = monthly mean + AR(1) anomaly (fitted by least squares)."""
 
     def fit(self, inflow: np.ndarray) -> InflowForecaster:
-        logq = np.log(inflow)
+        logq = np.log(np.maximum(inflow, 1e-6))
         self.mu = logq.mean(axis=0)
         anom = (logq - self.mu).ravel()
-        self.phi = float(anom[:-1] @ anom[1:] / (anom[:-1] @ anom[:-1]))
+        den = float(anom[:-1] @ anom[:-1])
+        phi = float(anom[:-1] @ anom[1:] / den) if den > 0.0 else 0.0
+        self.phi = float(np.clip(phi, -0.99, 0.99))
         resid = anom[1:] - self.phi * anom[:-1]
         self.sd = float(resid.std())
         return self
@@ -21,12 +23,12 @@ class InflowForecaster:
         return float(self.mu[month] + self.phi * prev_anomaly)
 
     def anomaly(self, value: float, month: int) -> float:
-        return float(np.log(value) - self.mu[month])
+        return float(np.log(max(float(value), 1e-6)) - self.mu[month])
 
 
 def conformal_interval(fc: InflowForecaster, inflow: np.ndarray, alpha: float = 0.1) -> float:
     """Half-width (in log units) from absolute residuals on a calibration series."""
-    flat = inflow.ravel()
+    flat = np.maximum(inflow.ravel(), 1e-6)
     res = []
     for i in range(1, len(flat)):
         m_prev, m = (i - 1) % 12, i % 12
@@ -38,7 +40,7 @@ def conformal_interval(fc: InflowForecaster, inflow: np.ndarray, alpha: float = 
 
 
 def coverage(fc: InflowForecaster, inflow: np.ndarray, half_width: float) -> float:
-    flat = inflow.ravel()
+    flat = np.maximum(inflow.ravel(), 1e-6)
     hit = 0
     for i in range(1, len(flat)):
         m_prev, m = (i - 1) % 12, i % 12

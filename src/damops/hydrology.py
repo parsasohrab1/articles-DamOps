@@ -40,9 +40,18 @@ def generate_inflow(years: int, rng: np.random.Generator) -> np.ndarray:
     return out
 
 
-def step(res: Reservoir, storage: float, inflow: float, release: float, month: int):
-    """Mass balance. Returns (new storage, delivered, spill)."""
-    release = min(release, res.max_release, max(storage + inflow - res.dead, 0.0))
-    s = storage + inflow - release
+def step(res: Reservoir, storage: float, inflow: float, release: float, month: int,
+         evaporation: float = 0.0):
+    """Mass balance. Returns (new storage, delivered, spill).
+
+    Evaporation is a known loss (hm3). With evaporation 0 the balance matches the
+    synthetic tests. Storage is kept at or above dead storage; if evaporation would
+    draw the pool below dead storage, the missing volume is not conserved.
+    """
+    evaporation = float(evaporation)
+    release = min(float(release), res.max_release,
+                  max(storage + inflow - evaporation - res.dead, 0.0))
+    s = storage + inflow - evaporation - release
     spill = max(s - res.capacity, 0.0)
-    return min(s, res.capacity), release, spill
+    s = min(max(s, res.dead), res.capacity)
+    return s, release, spill
