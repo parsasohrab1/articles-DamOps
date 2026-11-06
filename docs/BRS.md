@@ -20,4 +20,4 @@ Regional water company, dam operators, water resource planners.
 In: monthly single-reservoir model, forecast, SDP policy, simulation. Out: multi-reservoir cascades, hydropower, reinforcement learning, real-time control.
 
 ## Success measures (on real data)
-Supply reliability, maximum shortage, flood-limit violations per year, spill, forecast coverage, against the operator's current rule curve.
+Supply reliability, maximum shortage, flood-limit violations per year, spill, forecast coverage, against the historical release series. On ResOpsUS the supply target and the flood limit are inferred from fit and calibration years because the archive does not include a water order or a published rule curve. The comparison is recorded in `research/results.json`. A lower inferred cost is not by itself a reason to replace an operator's rule.

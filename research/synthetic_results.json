@@ -1,0 +1,59 @@
+{
+  "note": "synthetic inflow; 500-year test series per setting",
+  "forecast": {
+    "phi": 0.4086521900346719,
+    "sd_log": 0.41332476128529383,
+    "conformal_half_width_log": 0.6800504290921543
+  },
+  "same_climate": {
+    "sdp": {
+      "reliability": 0.7043333333333333,
+      "max_shortage_fraction": 0.8233229644429395,
+      "flood_limit_violations_per_year": 0.186,
+      "spill_hm3_per_year": 4.141039956431863,
+      "cost_per_month": 1.8965554259215944
+    },
+    "rule_curve": {
+      "reliability": 0.931,
+      "max_shortage_fraction": 0.9342234016782212,
+      "flood_limit_violations_per_year": 0.668,
+      "spill_hm3_per_year": 9.49605647023428,
+      "cost_per_month": 3.6988632140963627
+    },
+    "forecast_coverage_target_0.90": 0.8968161360226704
+  },
+  "drought_inflow_x0.7": {
+    "sdp": {
+      "reliability": 0.30966666666666665,
+      "max_shortage_fraction": 0.9539563811747549,
+      "flood_limit_violations_per_year": 0.02,
+      "spill_hm3_per_year": 0.2532474701964072,
+      "cost_per_month": 8.353067970230425
+    },
+    "rule_curve": {
+      "reliability": 0.507,
+      "max_shortage_fraction": 0.9736759519564804,
+      "flood_limit_violations_per_year": 0.028,
+      "spill_hm3_per_year": 0.09524747019640722,
+      "cost_per_month": 12.211388380218164
+    },
+    "forecast_coverage_target_0.90": 0.8551425237539589
+  },
+  "wet_inflow_x1.3": {
+    "sdp": {
+      "reliability": 0.9201666666666667,
+      "max_shortage_fraction": 0.6666666666666666,
+      "flood_limit_violations_per_year": 0.714,
+      "spill_hm3_per_year": 26.26331408983573,
+      "cost_per_month": 3.8303568205622565
+    },
+    "rule_curve": {
+      "reliability": 0.9965,
+      "max_shortage_fraction": 0.8595230854804039,
+      "flood_limit_violations_per_year": 2.098,
+      "spill_hm3_per_year": 67.69317727344539,
+      "cost_per_month": 11.575676650413797
+    },
+    "forecast_coverage_target_0.90": 0.876812802133689
+  }
+}

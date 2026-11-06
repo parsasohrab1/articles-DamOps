@@ -22,7 +22,7 @@ from damops.policy import SDPPolicy, rule_curve
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default="research/results.json")
+    ap.add_argument("--out", default="research/synthetic_results.json")
     a = ap.parse_args()
     res = Reservoir()
     train = generate_inflow(200, np.random.default_rng(1))
